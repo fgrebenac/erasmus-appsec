@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AppSec</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="new_post">New post</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="add_new_post">Add new post</string>
+</resources>

@@ -1,0 +1,66 @@
+2022-10-25 12:29:07.662 CEST [84167] LOG:  starting PostgreSQL 14.5 (Homebrew) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+2022-10-25 12:29:07.662 CEST [84167] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-10-25 12:29:07.662 CEST [84167] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:29:07.663 CEST [84167] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-10-25 12:29:07.663 CEST [84167] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:29:07.663 CEST [84167] WARNING:  could not create listen socket for "localhost"
+2022-10-25 12:29:07.663 CEST [84167] FATAL:  could not create any TCP/IP sockets
+2022-10-25 12:29:07.663 CEST [84167] LOG:  database system is shut down
+2022-10-25 12:29:14.338 CEST [84177] LOG:  starting PostgreSQL 14.5 (Homebrew) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+2022-10-25 12:29:14.339 CEST [84177] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-10-25 12:29:14.339 CEST [84177] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:29:14.339 CEST [84177] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-10-25 12:29:14.339 CEST [84177] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:29:14.339 CEST [84177] WARNING:  could not create listen socket for "localhost"
+2022-10-25 12:29:14.339 CEST [84177] FATAL:  could not create any TCP/IP sockets
+2022-10-25 12:29:14.339 CEST [84177] LOG:  database system is shut down
+2022-10-25 12:30:45.537 CEST [84268] LOG:  starting PostgreSQL 14.5 (Homebrew) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+2022-10-25 12:30:45.537 CEST [84268] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-10-25 12:30:45.537 CEST [84268] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:30:45.537 CEST [84268] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-10-25 12:30:45.537 CEST [84268] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:30:45.537 CEST [84268] WARNING:  could not create listen socket for "localhost"
+2022-10-25 12:30:45.537 CEST [84268] FATAL:  could not create any TCP/IP sockets
+2022-10-25 12:30:45.538 CEST [84268] LOG:  database system is shut down
+2022-10-25 12:32:55.352 CEST [84451] LOG:  starting PostgreSQL 14.5 (Homebrew) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+2022-10-25 12:32:55.353 CEST [84451] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-10-25 12:32:55.353 CEST [84451] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:32:55.353 CEST [84451] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-10-25 12:32:55.353 CEST [84451] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:32:55.353 CEST [84451] WARNING:  could not create listen socket for "localhost"
+2022-10-25 12:32:55.353 CEST [84451] FATAL:  could not create any TCP/IP sockets
+2022-10-25 12:32:55.353 CEST [84451] LOG:  database system is shut down
+2022-10-25 12:33:01.470 CEST [84470] LOG:  starting PostgreSQL 14.5 (Homebrew) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+2022-10-25 12:33:01.471 CEST [84470] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-10-25 12:33:01.471 CEST [84470] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:33:01.471 CEST [84470] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-10-25 12:33:01.471 CEST [84470] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-10-25 12:33:01.471 CEST [84470] WARNING:  could not create listen socket for "localhost"
+2022-10-25 12:33:01.471 CEST [84470] FATAL:  could not create any TCP/IP sockets
+2022-10-25 12:33:01.471 CEST [84470] LOG:  database system is shut down
+2022-10-25 12:36:18.334 CEST [84706] LOG:  starting PostgreSQL 14.5 (Homebrew) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+2022-10-25 12:36:18.335 CEST [84706] LOG:  listening on IPv6 address "::1", port 5432
+2022-10-25 12:36:18.335 CEST [84706] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2022-10-25 12:36:18.336 CEST [84706] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2022-10-25 12:36:18.338 CEST [84707] LOG:  database system was shut down at 2022-10-25 12:32:49 CEST
+2022-10-25 12:36:18.340 CEST [84706] LOG:  database system is ready to accept connections
+2022-10-25 12:38:32.355 CEST [84891] FATAL:  role "postgres" does not exist
+2022-10-25 12:38:41.919 CEST [84912] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:38:56.872 CEST [84936] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:00.790 CEST [84939] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:29.400 CEST [84955] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:29.435 CEST [84965] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:29.456 CEST [84975] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:32.971 CEST [84985] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:32.996 CEST [84995] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:33.017 CEST [85005] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:33.165 CEST [85015] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:33.188 CEST [85025] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:33.210 CEST [85035] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:39:40.225 CEST [85064] FATAL:  database "init.sql" does not exist
+2022-10-25 12:39:55.467 CEST [85072] FATAL:  database "fgrebenac" does not exist
+2022-10-25 12:45:05.659 CEST [84706] LOG:  received fast shutdown request
+2022-10-25 12:45:05.659 CEST [84706] LOG:  aborting any active transactions
+2022-10-25 12:45:05.659 CEST [84706] LOG:  background worker "logical replication launcher" (PID 84713) exited with exit code 1
+2022-10-25 12:45:05.660 CEST [84708] LOG:  shutting down
+2022-10-25 12:45:05.662 CEST [84706] LOG:  database system is shut down

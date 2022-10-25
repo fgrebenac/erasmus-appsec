@@ -1,0 +1,16 @@
+[package]
+name = "weblog-backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.5.16"
+log = "0.4.17"
+serde = "1.0.145"
+tokio = { version = "1.21.2", features = ["full"] }
+sqlx = { version = "0.6", features = [ "runtime-tokio-rustls", "postgres" ] }
+anyhow = "1.0.40"
+uuid = { version = "0.8", features = ["serde", "v4"] }
+tower-http = { git = "https://github.com/tabletopdev/tower-http", branch = "cors", features = [ "cors" ] }

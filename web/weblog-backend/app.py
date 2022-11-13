@@ -18,7 +18,10 @@ def login():
 
         cur = conn.cursor()
         cur.execute('SELECT id, password FROM app_user '
-                    "WHERE username = '" + username + "'")  # to avoid string encoding error
+                    'WHERE username = %(username)s',
+                    {
+                        'username': username
+                    })  # to avoid string encoding error
 
         user = cur.fetchone()
         cur.close()
@@ -105,7 +108,10 @@ def delete_user(user_id):
         conn = get_conn()
         cur = conn.cursor()
         cur.execute('DELETE FROM app_user '
-                    "WHERE id = '" + user_id + "'")
+                    'WHERE id = %(user_id)s',
+                    {
+                        "user_id": user_id
+                    })
 
         conn.commit()
         cur.close()
@@ -145,6 +151,7 @@ def create_post(user_id):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
+
         conn = get_conn()
         cur = conn.cursor()
         cur.execute('INSERT INTO post (title, content, user_id)'
@@ -180,7 +187,7 @@ def get_posts(user_id):
     try:
         token = get_token(request)
 
-        if is_user_not_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token, is_not_get=False):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -188,7 +195,10 @@ def get_posts(user_id):
         conn = get_conn()
         cur = conn.cursor()
         cur.execute(f'SELECT id, title, content FROM post p '
-                    "WHERE user_id = '" + user_id + "'")
+                    'WHERE user_id = %(user_id)s',
+                    {
+                        'user_id': user_id
+                    })
 
         posts = cur.fetchall()
 
@@ -220,7 +230,7 @@ def get_posts(user_id):
 def get_post_by_id(user_id, post_id):
     try:
         token = get_token(request)
-        if is_user_not_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token, is_not_get=False):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -355,15 +365,16 @@ def create_comment(user_id, post_id):
         content = json_body['content']
         token = get_token(request)
 
-        if is_user_not_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token, is_not_comment=False):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
+
         conn = get_conn()
         cur = conn.cursor()
         cur.execute('INSERT INTO comment (content, user_id, post_id)'
                     'values (%s, %s, %s)',
-                    (content, user_id, post_id))
+                    (content, get_current_user(token), post_id))
 
         conn.commit()
         cur.close()
@@ -394,7 +405,7 @@ def get_comments(user_id, post_id):
     try:
         token = get_token(request)
 
-        if is_user_not_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token, is_not_get=False):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -402,7 +413,10 @@ def get_comments(user_id, post_id):
         conn = get_conn()
         cur = conn.cursor()
         cur.execute(f'SELECT id, content FROM comment p '
-                    "WHERE post_id = '" + post_id + "'")
+                    'WHERE post_id = %(post_id)s',
+                    {
+                        "post_id": post_id
+                    })
         comments = cur.fetchall()
 
         cur.close()
@@ -433,7 +447,7 @@ def get_comments(user_id, post_id):
 def get_comment_by_id(user_id, post_id, comment_id):
     try:
         token = get_token(request)
-        if is_user_not_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token, is_not_get=False):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -441,8 +455,8 @@ def get_comment_by_id(user_id, post_id, comment_id):
         conn = get_conn()
         cur = conn.cursor()
         cur.execute('SELECT id, content FROM comment '
-                    'WHERE id = %s and user_id = %s and post_id = %s',
-                    (comment_id, user_id, post_id))
+                    'WHERE id = %s and post_id = %s',
+                    (comment_id, post_id))
 
         comments = cur.fetchmany()
 
@@ -484,7 +498,7 @@ def modify_comment_by_id(user_id, post_id, comment_id):
         content = json_body['content']
         token = get_token(request)
 
-        if is_user_not_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token, is_not_comment=False):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -493,7 +507,8 @@ def modify_comment_by_id(user_id, post_id, comment_id):
         cur = conn.cursor()
         cur.execute('UPDATE comment SET content = %s '
                     'WHERE id = %s and user_id = %s and post_id = %s',
-                    (content, comment_id, user_id, post_id))
+                    (content, comment_id, get_current_user(token), post_id))
+
         conn.commit()
         cur.close()
         conn.close()
@@ -520,7 +535,7 @@ def modify_comment_by_id(user_id, post_id, comment_id):
 def delete_comment_by_id(user_id, post_id, comment_id):
     try:
         token = get_token(request)
-        if is_user_not_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token, is_not_comment=False):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -529,7 +544,7 @@ def delete_comment_by_id(user_id, post_id, comment_id):
         cur = conn.cursor()
         cur.execute('DELETE FROM comment '
                     'where id = %s and user_id = %s and post_id = %s',
-                    (comment_id, user_id, post_id))
+                    (comment_id, get_current_user(token), post_id))
 
         conn.commit()
         cur.close()

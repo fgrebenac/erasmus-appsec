@@ -480,7 +480,7 @@ def get_comment_by_id(user_id, post_id, comment_id):
                         mimetype='application/json')
     if len(comments) == 0:
         return Response('{'
-                        '   "error": "comments does not exist"'
+                        '   "error": "comment does not exist"'
                         '}',
                         status=400,
                         mimetype='application/json')

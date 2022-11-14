@@ -124,7 +124,7 @@ def prepare_post_resp(posts):
         res += '"username": "' + str(posts[-1][3]) + '",\n'
 
         res += '"user_id": "' + str(posts[-1][4]) + '"\n' \
-                                               '}\n'
+                                                    '}\n'
         res += '\n]'
     return res
 

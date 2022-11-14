@@ -283,7 +283,7 @@ def get_post_by_id(user_id, post_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute('SELECT p.id, p.title, p.content, u.id, p.user_id FROM post p '
+        cur.execute('SELECT p.id, p.title, p.content, u.username, p.user_id FROM post p '
                     'JOIN app_user u on u.id = p.user_id '
                     'WHERE p.id = %s and p.user_id = %s',
                     (post_id, user_id))

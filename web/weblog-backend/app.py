@@ -182,8 +182,49 @@ def create_post(user_id):
                     mimetype='application/json')
 
 
+@app.route("/post", methods=['GET'])
+def get_posts():
+    try:
+        token = get_token(request)
+
+        if is_user_not_signed_in(None, token, is_not_get=False):
+            return Response('{'
+                            '   Token does not match the user id'
+                            '}', 401)
+
+        conn = get_conn()
+        cur = conn.cursor()
+        cur.execute('SELECT p.id, p.title, p.content, u.username, p.user_id FROM post p '
+                    'JOIN app_user u on p.user_id = u.id')
+        posts = cur.fetchall()
+
+        cur.close()
+        conn.close()
+
+    except (UserTokenExpiredError, BadAuthorizationToken) as error:
+        print(error)
+        return Response('{'
+                        '   "error": "' + str(error) + '"'
+                                                       '}',
+                        status=401,
+                        mimetype='application/json')
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        return Response('{'
+                        '   "error": "' + str(error) + '"'
+                                                       '}',
+                        status=400,
+                        mimetype='application/json')
+
+    return Response(prepare_post_resp(posts),
+                    status=200,
+                    mimetype='application/json')
+
+
+
 @app.route("/user/<user_id>/post", methods=['GET'])
-def get_posts(user_id):
+def get_user_posts(user_id):
     try:
         token = get_token(request)
 
@@ -194,7 +235,8 @@ def get_posts(user_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute(f'SELECT id, title, content, user_id FROM post p '
+        cur.execute('SELECT p.id, p.title, p.content, u.username, p.user_id FROM post p '
+                    'JOIN app_user u on u.id = p.user_id '
                     'WHERE user_id = %(user_id)s',
                     {
                         'user_id': user_id
@@ -237,8 +279,9 @@ def get_post_by_id(user_id, post_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute('SELECT id, title, content, user_id FROM post p '
-                    'WHERE id = %s and user_id = %s',
+        cur.execute('SELECT p.id, p.title, p.content, u.id, p.user_id FROM post p '
+                    'JOIN app_user u on u.id = p.user_id '
+                    'WHERE p.id = %s and p.user_id = %s',
                     (post_id, user_id))
 
         posts = cur.fetchmany()

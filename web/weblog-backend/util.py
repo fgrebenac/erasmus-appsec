@@ -104,7 +104,11 @@ def prepare_post_resp(posts):
 
             res += '"title": "' + str(post[1]) + '",\n'
 
-            res += '"content": "' + str(post[2]) + '"\n' \
+            res += '"content": "' + str(post[2]) + '",\n'
+
+            res += '"username": "' + str(post[3]) + '",\n'
+
+            res += '"user_id": "' + str(post[4]) + '"\n' \
                                                    '},\n'
 
         res += '{\n' \
@@ -112,8 +116,12 @@ def prepare_post_resp(posts):
 
         res += '"title": "' + str(posts[-1][1]) + '",\n'
 
-        res += '"content": "' + str(posts[-1][2]) + '"\n' \
-                                                    '}\n'
+        res += '"content": "' + str(posts[-1][2]) + '",\n'
+
+        res += '"username": "' + str(posts[-1][3]) + '",\n'
+
+        res += '"user_id": "' + str(posts[-1][4]) + '"\n' \
+                                               '}\n'
         res += '\n]'
     return res
 

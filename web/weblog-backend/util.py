@@ -77,7 +77,9 @@ def prepare_comment_resp(comments):
 
             res += '"user_id": "' + str(comments[-1][2]) + '",'
 
-            res += '"post_id": "' + str(comments[-1][3]) + '"' \
+            res += '"post_id": "' + str(comments[-1][3]) + '",'
+
+            res += '"username": "' + str(comments[-1][4]) + '"' \
                                                            '},'
 
         res += '{\n' \
@@ -87,7 +89,8 @@ def prepare_comment_resp(comments):
 
         res += '"user_id": "' + str(comments[-1][2]) + '",'
 
-        res += '"post_id": "' + str(comments[-1][3]) + '"' \
+        res += '"post_id": "' + str(comments[-1][3]) + '",'
+        res += '"username": "' + str(comments[-1][4]) + '"'        \
                                                        '}'
         res += '\n]'
     return res

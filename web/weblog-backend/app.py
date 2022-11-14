@@ -455,8 +455,9 @@ def get_comments(user_id, post_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute(f'SELECT id, content, user_id, post_id FROM comment p '
-                    'WHERE post_id = %(post_id)s',
+        cur.execute(f'SELECT c.id, c.content, c.user_id, c.post_id, u.username FROM comment c '
+                    f'JOIN app_user u on u.id = c.user_id '
+                    'WHERE c.post_id = %(post_id)s',
                     {
                         "post_id": post_id
                     })
@@ -497,8 +498,9 @@ def get_comment_by_id(user_id, post_id, comment_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute('SELECT id, content, user_id, post_id FROM comment '
-                    'WHERE id = %s and post_id = %s',
+        cur.execute('SELECT c.id, c.content, c.user_id, c.post_id, u.username FROM comment c '
+                    'JOIN app_user u on u.id = c.user_id '
+                    'WHERE c.id = %s and c.post_id = %s',
                     (comment_id, post_id))
 
         comments = cur.fetchmany()

@@ -194,7 +194,7 @@ def get_posts(user_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute(f'SELECT id, title, content FROM post p '
+        cur.execute(f'SELECT id, title, content, user_id FROM post p '
                     'WHERE user_id = %(user_id)s',
                     {
                         'user_id': user_id
@@ -237,7 +237,7 @@ def get_post_by_id(user_id, post_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute('SELECT id, title, content FROM post p '
+        cur.execute('SELECT id, title, content, user_id FROM post p '
                     'WHERE id = %s and user_id = %s',
                     (post_id, user_id))
 
@@ -412,7 +412,7 @@ def get_comments(user_id, post_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute(f'SELECT id, content FROM comment p '
+        cur.execute(f'SELECT id, content, user_id, post_id FROM comment p '
                     'WHERE post_id = %(post_id)s',
                     {
                         "post_id": post_id
@@ -454,7 +454,7 @@ def get_comment_by_id(user_id, post_id, comment_id):
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute('SELECT id, content FROM comment '
+        cur.execute('SELECT id, content, user_id, post_id FROM comment '
                     'WHERE id = %s and post_id = %s',
                     (comment_id, post_id))
 

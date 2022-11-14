@@ -67,28 +67,28 @@ def process_json(req):
 def prepare_comment_resp(comments):
     if len(comments) == 0:
         res = '[]'
-    elif len(comments) == 1:
-
-        res = '[{\n' \
-              '"id": "' + str(comments[-1][0]) + '",\n'
-
-        res += '"content": "' + str(comments[-1][1]) + '"\n' \
-                                                       '}]'
-
     else:
         res = '[\n'
         for comment in comments[:-1]:
             res += '{\n' \
                    '"id": "' + str(comment[0]) + '",\n'
 
-            res += '"content": "' + str(comment[1]) + '"\n' \
-                                                      '},\n'
+            res += '"content": "' + str(comments[-1][1]) + '",\n'
+
+            res += '"user_id": "' + str(comments[-1][2]) + '",'
+
+            res += '"post_id": "' + str(comments[-1][3]) + '"' \
+                                                           '},'
 
         res += '{\n' \
                '"id": "' + str(comments[-1][0]) + '",\n'
 
-        res += '"content": "' + str(comments[-1][1]) + '"\n' \
-                                                       '}\n'
+        res += '"content": "' + str(comments[-1][1]) + '",\n'
+
+        res += '"user_id": "' + str(comments[-1][2]) + '",'
+
+        res += '"post_id": "' + str(comments[-1][3]) + '"' \
+                                                       '}'
         res += '\n]'
     return res
 
@@ -96,16 +96,6 @@ def prepare_comment_resp(comments):
 def prepare_post_resp(posts):
     if len(posts) == 0:
         res = '[]'
-    elif len(posts) == 1:
-
-        res = '[{\n' \
-              '"id": "' + str(posts[-1][0]) + '",\n'
-
-        res += '"title": "' + str(posts[-1][1]) + '",\n'
-
-        res += '"content": "' + str(posts[-1][2]) + '"\n' \
-                                                    '}]'
-
     else:
         res = '[\n'
         for post in posts[:-1]:

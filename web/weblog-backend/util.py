@@ -49,11 +49,36 @@ def is_user_not_signed_in(user_id, token, is_not_get=True, is_not_comment=True):
 
     if (not user_id) and (not token) and (not user_id) in (not tokens) and (not tokens[user_id]):
         raise BadAuthorizationToken
+
     elif datetime.fromtimestamp(uuid_exp['exp']) - timedelta(minutes=60) < datetime.utcnow():
         raise UserTokenExpiredError
+
     elif not is_not_comment or user_id == uuid_exp['user_id']:
         return False
+
+    if is_admin_user(get_current_user(token)):
+        return False
+
     return True
+
+
+def is_admin_user(uuid):
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute('SELECT is_admin '
+                'FROM app_user u '
+                'WHERE id = %(uuid)s',
+                {
+                    "uuid": uuid
+                })
+    result = cur.fetchone()
+
+    print(result[0])
+
+    cur.close()
+    conn.close()
+
+    return result[0]
 
 
 def process_json(req):
@@ -80,7 +105,7 @@ def prepare_comment_resp(comments):
             res += '"post_id": "' + str(comments[-1][3]) + '",'
 
             res += '"username": "' + str(comments[-1][4]) + '"' \
-                                                           '},'
+                                                            '},'
 
         res += '{\n' \
                '"id": "' + str(comments[-1][0]) + '",\n'
@@ -90,8 +115,8 @@ def prepare_comment_resp(comments):
         res += '"user_id": "' + str(comments[-1][2]) + '",'
 
         res += '"post_id": "' + str(comments[-1][3]) + '",'
-        res += '"username": "' + str(comments[-1][4]) + '"'        \
-                                                       '}'
+        res += '"username": "' + str(comments[-1][4]) + '"' \
+                                                        '}'
         res += '\n]'
     return res
 
@@ -143,23 +168,8 @@ def check_email(email):
         return False
 
 
-def lower_upper_num(password):
-    digit = False
-    upper = False
-    lower = False
-    for char in password:
-        if str(char).isdigit():
-            digit = True
-        elif str(char).isupper():
-            upper = True
-        elif str(char).islower():
-            lower = True
-
-    return lower and upper and digit
-
-
 def check_password(password):
-    if 6 <= len(password) <= 20:  # and lower_upper_num(password):
+    if 6 <= len(password) <= 20:
         return True
     else:
         return False

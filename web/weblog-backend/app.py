@@ -71,8 +71,7 @@ def create_user():
         if not check_email(email):
             return Response('E-mail is not properly formatted', 400, mimetype='application/json')
         if not check_password(password):
-            return Response('Password length should be greater than 6 and lower than 20'
-                            ' and need to have at least one number and one letter', 400, mimetype='application'
+            return Response('Password length should be greater than 6 and lower than 20', 400, mimetype='application'
                                                                                                   '/json')
 
         hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())

@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { UserRequest } from '../models/Models';
 
 const theme = createTheme();
 
@@ -20,10 +22,20 @@ export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    let user: UserRequest = {
+      username: data.get('username')?.toString(),
+      password: data.get('password')?.toString()
+    }
+    axios.post('http://127.0.0.1:5000/user', {
+      "username": data.get('username')?.toString(),
+      "password": data.get('password')?.toString(),
+      "email": data.get('email')?.toString()
+    }).then(res => {
+      if (res.status == 200) {
+        console.log("Success")
+        navigate("/login")
+      }
+    })
   };
 
   return (
@@ -46,35 +58,22 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="email"
+                  label="Email"
+                  name="email"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  id="username"
+                  label="Username"
+                  name="username"
                 />
               </Grid>
               <Grid item xs={12}>

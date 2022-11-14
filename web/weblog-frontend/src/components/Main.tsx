@@ -3,9 +3,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Markdown from './Markdown';
+import { Post } from '../models/Models';
 
 interface MainProps {
-  posts: ReadonlyArray<string>;
+  posts: Post[];
   title: string;
 }
 
@@ -29,7 +30,7 @@ export default function Main(props: MainProps) {
       </Typography>
       <Divider />
       {posts.map((post) => (
-        <Markdown className="markdown" key={post.substring(0, 40)}>
+        <Markdown className="markdown" key={post}>
           {post}
         </Markdown>
       ))}

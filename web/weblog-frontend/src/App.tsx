@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
-import Blog from './Blog';
+import Blog from './pages/Blog';
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import BlogPost from './pages/BlogPost';
+import NewBlogPost from './pages/NewBlogPost';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/" element={<Blog />} />
         <Route path="login" element={<SignIn />} />
         <Route path="register" element={<SignUp />} />
+        <Route path="post/:postId" element={<BlogPost />} />
+        <Route path="newpost" element={<NewBlogPost />} />
       </Routes>
     </BrowserRouter>
   );

@@ -4,11 +4,14 @@ import jwt
 from flask import Flask, request, Response
 from util import *
 import bcrypt
-
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route("/login", methods=['POST'])
+@cross_origin()
 def login():
     try:
         conn = get_conn()
@@ -57,6 +60,7 @@ def login():
 
 
 @app.route("/user", methods=['POST'])
+@cross_origin()
 def create_user():
     try:
         json_body = process_json(request)

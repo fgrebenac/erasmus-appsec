@@ -80,8 +80,8 @@ def create_user():
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute('INSERT INTO app_user (username, password, email, is_admin) '
-                    'values (%s, %s, %s, true)',
+        cur.execute('INSERT INTO app_user (username, password, email) '
+                    'values (%s, %s, %s)',
                     (username, hashed_pw.decode('utf-8'), email))
 
         conn.commit()
@@ -566,8 +566,9 @@ def modify_comment_by_id(user_id, post_id, comment_id):
         conn = get_conn()
         cur = conn.cursor()
         cur.execute('UPDATE comment SET content = %s '
-                    'WHERE id = %s and user_id = %s and post_id = %s',
-                    (content, comment_id, get_current_user(token), post_id))
+                    'WHERE id = %s and user_id = %s and post_id = %s OR '
+                    '(id = %s and %s in (select id from app_user where is_admin = \'true\'))',
+                    (content, comment_id, get_current_user(token), post_id, comment_id, get_current_user(token)))
 
         conn.commit()
         cur.close()
@@ -605,8 +606,9 @@ def delete_comment_by_id(user_id, post_id, comment_id):
         conn = get_conn()
         cur = conn.cursor()
         cur.execute('DELETE FROM comment '
-                    'where id = %s and user_id = %s and post_id = %s',
-                    (comment_id, get_current_user(token), post_id))
+                    'where id = %s and user_id = %s and post_id = %s OR '
+                    '(id = %s and %s in (select id from app_user where is_admin = \'true\'))',
+                    (comment_id, get_current_user(token), post_id, comment_id, get_current_user(token)))
 
         conn.commit()
         cur.close()

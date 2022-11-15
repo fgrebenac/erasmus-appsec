@@ -47,9 +47,6 @@ def is_user_not_signed_in(user_id, token, is_not_get=True, is_not_comment=True):
 
     uuid_exp = jwt.decode(token, SECRET_KEY, algorithms="HS256")
 
-    print(user_id)
-    print(uuid_exp['user_id'])
-
     if (not user_id) and (not token) and (not user_id) in (not tokens) and (not tokens[user_id]):
         raise BadAuthorizationToken
 
@@ -57,7 +54,6 @@ def is_user_not_signed_in(user_id, token, is_not_get=True, is_not_comment=True):
         raise UserTokenExpiredError
 
     elif not is_not_comment or user_id == uuid_exp['user_id']:
-        print("Ovde 1")
         return False
 
     if is_admin_user(get_current_user(token)):
@@ -67,7 +63,6 @@ def is_user_not_signed_in(user_id, token, is_not_get=True, is_not_comment=True):
 
 
 def is_admin_user(uuid):
-    print(uuid)
     conn = get_conn()
     cur = conn.cursor()
     cur.execute('SELECT is_admin '
@@ -80,7 +75,6 @@ def is_admin_user(uuid):
 
     cur.close()
     conn.close()
-    print(result[0])
     return result[0]
 
 
@@ -90,6 +84,7 @@ def process_json(req):
         return req.json
     else:
         return None
+
 
 def prepare_comment_resp(comments):
     if len(comments) == 0:

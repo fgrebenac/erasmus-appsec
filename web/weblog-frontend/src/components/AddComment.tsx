@@ -15,7 +15,7 @@ interface AddCommentProps {
 
 export default function AddCommentView({ postId, cancelClick, doneClick }: AddCommentProps) {
 
-    let [content, setContent] = useState<string>("Write comment...")
+    let [content, setContent] = useState<string>("")
 
     return (
         <Box>
@@ -58,6 +58,11 @@ export default function AddCommentView({ postId, cancelClick, doneClick }: AddCo
                     let text = e.currentTarget.textContent;
                     if (text != null) {
                         setContent(text);
+                    }
+                }}
+                onClick={(e) => {
+                    if (content == "") {
+                        e.currentTarget.textContent = ""
                     }
                 }}
                 marginRight="10px">

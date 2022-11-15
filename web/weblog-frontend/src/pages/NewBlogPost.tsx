@@ -18,8 +18,8 @@ const theme = createTheme();
 export default function NewBlogPost() {
     let navigate = useNavigate();
 
-    let [title, setTitle] = useState<string>("Title")
-    let [content, setContent] = useState<string>("Content")
+    let [title, setTitle] = useState<string>("")
+    let [content, setContent] = useState<string>("")
 
     return (
         <ThemeProvider theme={theme}>
@@ -33,6 +33,11 @@ export default function NewBlogPost() {
                         sx={{ fontWeight: 'bold' }}
                         suppressContentEditableWarning={true}
                         contentEditable={true}
+                        onClick={(e) => {
+                            if (title == "") {
+                                e.currentTarget.textContent = ""
+                            }
+                        }}
                         onInput={(e) => {
                             let text = e.currentTarget.textContent;
                             if (text != null) {
@@ -46,6 +51,11 @@ export default function NewBlogPost() {
                         variant="body1"
                         suppressContentEditableWarning={true}
                         contentEditable={true}
+                        onClick={(e) => {
+                            if (content == "") {
+                                e.currentTarget.textContent = ""
+                            }
+                        }}
                         onInput={(e) => {
                             let text = e.currentTarget.textContent;
                             if (text != null) {

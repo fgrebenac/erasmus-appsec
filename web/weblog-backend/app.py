@@ -80,8 +80,8 @@ def create_user():
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute('INSERT INTO app_user (username, password, email) '
-                    'values (%s, %s, %s)',
+        cur.execute('INSERT INTO app_user (username, password, email, is_admin) '
+                    'values (%s, %s, %s, true)',
                     (username, hashed_pw.decode('utf-8'), email))
 
         conn.commit()
@@ -101,6 +101,7 @@ def create_user():
 
 
 @app.route("/user/<user_id>", methods=['DELETE'])
+@cross_origin()
 def delete_user(user_id):
     try:
         token = get_token(request)
@@ -144,6 +145,7 @@ def delete_user(user_id):
 
 # posts
 @app.route("/user/<user_id>/post", methods=['POST'])
+@cross_origin()
 def create_post(user_id):
     try:
         json_body = process_json(request)
@@ -188,6 +190,7 @@ def create_post(user_id):
 
 
 @app.route("/post", methods=['GET'])
+@cross_origin()
 def get_posts():
     try:
         token = get_token(request)
@@ -228,6 +231,7 @@ def get_posts():
 
 
 @app.route("/user/<user_id>/post", methods=['GET'])
+@cross_origin()
 def get_user_posts(user_id):
     try:
         token = get_token(request)
@@ -273,6 +277,7 @@ def get_user_posts(user_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>", methods=['GET'])
+@cross_origin()
 def get_post_by_id(user_id, post_id):
     try:
         token = get_token(request)
@@ -322,6 +327,7 @@ def get_post_by_id(user_id, post_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>", methods=['PUT'])
+@cross_origin()
 def modify_post_by_id(user_id, post_id):
     try:
         json_body = process_json(request)
@@ -362,6 +368,7 @@ def modify_post_by_id(user_id, post_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>", methods=['DELETE'])
+@cross_origin()
 def delete_post_by_id(user_id, post_id):
     try:
         token = get_token(request)
@@ -405,6 +412,7 @@ def delete_post_by_id(user_id, post_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>/comment", methods=['POST'])
+@cross_origin()
 def create_comment(user_id, post_id):
     try:
         json_body = process_json(request)
@@ -448,6 +456,7 @@ def create_comment(user_id, post_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>/comment", methods=['GET'])
+@cross_origin()
 def get_comments(user_id, post_id):
     try:
         token = get_token(request)
@@ -492,6 +501,7 @@ def get_comments(user_id, post_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>/comment/<comment_id>", methods=['GET'])
+@cross_origin()
 def get_comment_by_id(user_id, post_id, comment_id):
     try:
         token = get_token(request)
@@ -541,13 +551,14 @@ def get_comment_by_id(user_id, post_id, comment_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>/comment/<comment_id>", methods=['PUT'])
+@cross_origin()
 def modify_comment_by_id(user_id, post_id, comment_id):
     try:
         json_body = process_json(request)
         content = json_body['content']
         token = get_token(request)
 
-        if is_user_not_signed_in(user_id, token, is_not_comment=False):
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -581,10 +592,12 @@ def modify_comment_by_id(user_id, post_id, comment_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>/comment/<comment_id>", methods=['DELETE'])
+@cross_origin()
 def delete_comment_by_id(user_id, post_id, comment_id):
     try:
         token = get_token(request)
-        if is_user_not_signed_in(user_id, token, is_not_comment=False):
+        print(token)
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)

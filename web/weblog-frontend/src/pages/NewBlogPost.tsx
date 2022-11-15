@@ -72,6 +72,9 @@ export default function NewBlogPost() {
                                     if (res.status == 200) {
                                         navigate("/")
                                     }
+                                    if (res.status == 401) {
+                                        localStorage.clear()
+                                    }
                                 })
                             }
                         }}>

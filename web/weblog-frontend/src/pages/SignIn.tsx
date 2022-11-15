@@ -29,6 +29,7 @@ export default function SignIn() {
       if (res.status == 200) {
         localStorage.setItem("userId", res.data["id"]);
         localStorage.setItem("token", res.data["jwt"]);
+        localStorage.setItem("isAdmin", res.data["is_admin"]);
         navigate("/")
       }
     })

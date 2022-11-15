@@ -9,12 +9,15 @@ import { useState } from 'react';
 import { PostComment } from '../models/Models';
 
 interface CommentProps {
-    comment: PostComment
+    comment: PostComment,
+    deleteClick: () => any,
+    updateClick: (content: string) => any,
 }
 
-export default function CommentView({ comment }: CommentProps) {
+export default function CommentView({ comment, deleteClick, updateClick }: CommentProps) {
 
     const [isEditing, setEditing] = useState<boolean>(false);
+    let [content, setContent] = useState<string>(comment.content)
 
     return (
         <Box>
@@ -23,25 +26,42 @@ export default function CommentView({ comment }: CommentProps) {
                     {comment.username}
                 </Typography>
                 <Box>
-                    {!isEditing &&
+                    {!isEditing && localStorage.getItem("userId") != null && localStorage.getItem("userId") == comment.user_id &&
                         <Button variant="outlined" size="small" style={{ marginRight: 5 }} onClick={() => { setEditing(true) }}>
                             Edit
                             <EditIcon fontSize='small' style={{ marginLeft: 2 }} />
                         </Button>
                     }
-                    {isEditing &&
-                        <Button variant="outlined" size="small" style={{ marginRight: 5 }} onClick={() => { setEditing(false) }}>
+                    {isEditing && localStorage.getItem("userId") != null && localStorage.getItem("userId") == comment.user_id &&
+                        <Button variant="outlined" size="small" style={{ marginRight: 5 }} onClick={() => {
+                            updateClick(content);
+                            setEditing(false)
+                        }}>
                             Done
                             <DoneIcon fontSize='small' style={{ marginLeft: 2 }} />
                         </Button>
                     }
-                    <Button color='error' variant="outlined" size="small">
-                        Delete
-                        <DeleteIcon fontSize='small' style={{ marginLeft: 2 }} />
-                    </Button>
+                    {
+                        ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin")) ||
+                        (localStorage.getItem("userId") != null && localStorage.getItem("userId") == comment.user_id)) &&
+                        <Button color='error' variant="outlined" size="small" onClick={() => { deleteClick() }}>
+                            Delete
+                            <DeleteIcon fontSize='small' style={{ marginLeft: 2 }} />
+                        </Button>
+                    }
                 </Box>
             </Box>
-            <Typography variant="body1" contentEditable={isEditing} marginRight="10px">
+            <Typography
+                variant="body1"
+                suppressContentEditableWarning={true}
+                contentEditable={isEditing}
+                onInput={(e) => {
+                    let text = e.currentTarget.textContent;
+                    if (text != null) {
+                        setContent(text);
+                    }
+                }}
+                marginRight="10px">
                 {comment.content}
             </Typography>
             <Divider style={{ marginTop: 10, marginBottom: 10 }} />

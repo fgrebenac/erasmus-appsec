@@ -4,11 +4,11 @@ export interface UserRequest {
 }
 
 export interface PostComment {
-    commentId: string,
+    id: string,
     content: string,
-    userId: string,
+    user_id: string,
     username: string,
-    postId: string
+    post_id: string
 }
 
 export interface Post {

@@ -3,7 +3,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import { Box, ButtonBase } from '@mui/material';
 
 interface HeaderProps {
   title: string;
@@ -26,6 +25,9 @@ export default function Header(props: HeaderProps) {
             align="left"
             noWrap
             sx={{ flex: 1 }}
+            onClick={() => {
+              navigate("/")
+            }}
           >
             {title}
           </Typography>
@@ -49,6 +51,9 @@ export default function Header(props: HeaderProps) {
             align="left"
             noWrap
             sx={{ flex: 1 }}
+            onClick={() => {
+              navigate("/")
+            }}
           >
             {title}
           </Typography>

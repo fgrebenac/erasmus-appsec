@@ -33,7 +33,7 @@ export default function Blog() {
         <main>
           <Grid container spacing={4}>
             {posts != null && posts.map((post) => (
-              <FeaturedPost key={post.title} post={post} />
+              <FeaturedPost key={post.id} post={post} />
             ))}
           </Grid>
         </main>

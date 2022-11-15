@@ -1,8 +1,3 @@
-export interface UserRequest {
-    username: string | undefined,
-    password: string | undefined
-}
-
 export interface PostComment {
     id: string,
     content: string,

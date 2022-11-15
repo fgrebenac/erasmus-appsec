@@ -32,10 +32,10 @@ export default function AddCommentView({ postId, cancelClick, doneClick }: AddCo
                                     "Authorization": `Basic ${token}`
                                 }
                             }).then(res => {
-                                if (res.status == 200) {
+                                if (res.status === 200) {
                                     doneClick()
                                 }
-                                if (res.status == 401) {
+                                if (res.status === 401) {
                                     localStorage.clear()
                                 }
                             })
@@ -61,7 +61,7 @@ export default function AddCommentView({ postId, cancelClick, doneClick }: AddCo
                     }
                 }}
                 onClick={(e) => {
-                    if (content == "") {
+                    if (content === "") {
                         e.currentTarget.textContent = ""
                     }
                 }}

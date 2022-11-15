@@ -12,7 +12,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserRequest } from '../models/Models';
 
 const theme = createTheme();
 
@@ -22,16 +21,12 @@ export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    let user: UserRequest = {
-      username: data.get('username')?.toString(),
-      password: data.get('password')?.toString()
-    }
     axios.post('http://127.0.0.1:5000/user', {
       "username": data.get('username')?.toString(),
       "password": data.get('password')?.toString(),
       "email": data.get('email')?.toString()
     }).then(res => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         navigate("/login")
       }
     })

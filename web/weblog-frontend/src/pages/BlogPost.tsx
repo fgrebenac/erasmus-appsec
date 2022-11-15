@@ -41,10 +41,10 @@ export default function BlogPost() {
                     "Authorization": `Basic ${token}`
                 }
             }).then(res => {
-                if (res.status == 200) {
+                if (res.status === 200) {
                     fetchComments()
                 }
-                if (res.status == 401) {
+                if (res.status === 401) {
                     localStorage.clear()
                 }
             })
@@ -63,10 +63,10 @@ export default function BlogPost() {
                         "Authorization": `Basic ${token}`
                     }
                 }).then(res => {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         fetchComments()
                     }
-                    if (res.status == 401) {
+                    if (res.status === 401) {
                         localStorage.clear()
                     }
                 })
@@ -81,10 +81,10 @@ export default function BlogPost() {
                     "Authorization": `Basic ${token}`
                 }
             }).then(res => {
-                if (res.status == 200) {
+                if (res.status === 200) {
                     navigate("/")
                 }
-                if (res.status == 401) {
+                if (res.status === 401) {
                     localStorage.clear()
                 }
             })
@@ -115,8 +115,8 @@ export default function BlogPost() {
                             {post?.title}
                         </Typography>
                         {
-                            ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin")) == "True" ||
-                                (localStorage.getItem("userId") != null && localStorage.getItem("userId") == userId)) &&
+                            ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin")) === "True" ||
+                                (localStorage.getItem("userId") != null && localStorage.getItem("userId") === userId)) &&
                             <Button color='error' variant="outlined" size="small" onClick={() => { deletePost() }}>
                                 Delete post
                                 <DeleteIcon fontSize='small' style={{ marginLeft: 2 }} />

@@ -5,10 +5,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Box, Button, Divider, Typography } from '@mui/material';
-import CommentView from '../components/Comment';
-import { Post, PostComment, PostRequest } from '../models/Models';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
@@ -34,7 +32,7 @@ export default function NewBlogPost() {
                         suppressContentEditableWarning={true}
                         contentEditable={true}
                         onClick={(e) => {
-                            if (title == "") {
+                            if (title === "") {
                                 e.currentTarget.textContent = ""
                             }
                         }}
@@ -52,7 +50,7 @@ export default function NewBlogPost() {
                         suppressContentEditableWarning={true}
                         contentEditable={true}
                         onClick={(e) => {
-                            if (content == "") {
+                            if (content === "") {
                                 e.currentTarget.textContent = ""
                             }
                         }}
@@ -79,10 +77,10 @@ export default function NewBlogPost() {
                                         "Authorization": `Basic ${token}`
                                     }
                                 }).then(res => {
-                                    if (res.status == 200) {
+                                    if (res.status === 200) {
                                         navigate("/")
                                     }
-                                    if (res.status == 401) {
+                                    if (res.status === 401) {
                                         localStorage.clear()
                                     }
                                 })

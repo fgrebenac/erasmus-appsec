@@ -26,13 +26,13 @@ export default function CommentView({ comment, deleteClick, updateClick }: Comme
                     {comment.username}
                 </Typography>
                 <Box>
-                    {!isEditing && localStorage.getItem("userId") != null && localStorage.getItem("userId") == comment.user_id &&
+                    {!isEditing && localStorage.getItem("userId") != null && localStorage.getItem("userId") === comment.user_id &&
                         <Button variant="outlined" size="small" style={{ marginRight: 5 }} onClick={() => { setEditing(true) }}>
                             Edit
                             <EditIcon fontSize='small' style={{ marginLeft: 2 }} />
                         </Button>
                     }
-                    {isEditing && localStorage.getItem("userId") != null && localStorage.getItem("userId") == comment.user_id &&
+                    {isEditing && localStorage.getItem("userId") != null && localStorage.getItem("userId") === comment.user_id &&
                         <Button variant="outlined" size="small" style={{ marginRight: 5 }} onClick={() => {
                             updateClick(content);
                             setEditing(false)
@@ -42,8 +42,8 @@ export default function CommentView({ comment, deleteClick, updateClick }: Comme
                         </Button>
                     }
                     {
-                        ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin") == "True") ||
-                        (localStorage.getItem("userId") != null && localStorage.getItem("userId") == comment.user_id)) &&
+                        ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin") === "True") ||
+                        (localStorage.getItem("userId") != null && localStorage.getItem("userId") === comment.user_id)) &&
                         <Button color='error' variant="outlined" size="small" onClick={() => { deleteClick() }}>
                             Delete
                             <DeleteIcon fontSize='small' style={{ marginLeft: 2 }} />

@@ -12,7 +12,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserRequest } from '../models/Models';
 
 const theme = createTheme();
 
@@ -26,7 +25,7 @@ export default function SignIn() {
       "username": data.get('username')?.toString(),
       "password": data.get('password')?.toString()
     }).then(res => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         localStorage.setItem("userId", res.data["id"]);
         localStorage.setItem("token", res.data["jwt"]);
         localStorage.setItem("isAdmin", res.data["is_admin"]);

@@ -24,7 +24,6 @@ export default function AddCommentView({ postId, cancelClick, doneClick }: AddCo
                     <Button variant="outlined" size="small" style={{ marginRight: 5 }} onClick={() => {
                         let userId = localStorage.getItem("userId");
                         let token = localStorage.getItem("token");
-                        console.log("Tu sam " + userId);
                         if (userId != null && token != null) {
                             axios.post(`http://127.0.0.1:5000/user/${userId}/post/${postId}/comment`, {
                                 "content": content,

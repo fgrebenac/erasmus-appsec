@@ -73,8 +73,6 @@ def is_admin_user(uuid):
                 })
     result = cur.fetchone()
 
-    print(result[0])
-
     cur.close()
     conn.close()
 
@@ -98,14 +96,14 @@ def prepare_comment_resp(comments):
             res += '{\n' \
                    '"id": "' + str(comment[0]) + '",\n'
 
-            res += '"content": "' + str(comments[-1][1]) + '",\n'
+            res += '"content": "' + str(comment[1]) + '",\n'
 
-            res += '"user_id": "' + str(comments[-1][2]) + '",'
+            res += '"user_id": "' + str(comment[2]) + '",'
 
-            res += '"post_id": "' + str(comments[-1][3]) + '",'
+            res += '"post_id": "' + str(comment[3]) + '",'
 
-            res += '"username": "' + str(comments[-1][4]) + '"' \
-                                                            '},'
+            res += '"username": "' + str(comment[4]) + '"' \
+                                                       '},'
 
         res += '{\n' \
                '"id": "' + str(comments[-1][0]) + '",\n'

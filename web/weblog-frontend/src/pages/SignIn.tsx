@@ -30,6 +30,10 @@ export default function SignIn() {
         localStorage.setItem("userId", res.data["id"]);
         localStorage.setItem("token", res.data["jwt"]);
         localStorage.setItem("isAdmin", res.data["is_admin"]);
+        let username = data.get('username')?.toString()
+        if (username != null) {
+          localStorage.setItem("username", username)
+        }
         navigate("/")
       }
     })

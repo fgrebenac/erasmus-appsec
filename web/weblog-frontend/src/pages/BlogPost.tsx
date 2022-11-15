@@ -34,8 +34,9 @@ export default function BlogPost() {
 
     const deleteComment = async (id: string) => {
         let token = localStorage.getItem("token");
-        if (token != null) {
-            axios.delete(`http://127.0.0.1:5000/user/${userId}/post/${postId}/comment/${id}`, {
+        let myUserId = localStorage.getItem("userId");
+        if (token != null && myUserId != null) {
+            axios.delete(`http://127.0.0.1:5000/user/${myUserId}/post/${postId}/comment/${id}`, {
                 headers: {
                     "Authorization": `Basic ${token}`
                 }
@@ -114,8 +115,8 @@ export default function BlogPost() {
                             {post?.title}
                         </Typography>
                         {
-                            localStorage.getItem("userId") != null && localStorage.getItem("userId") == userId &&
-
+                            ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin")) == "True" ||
+                                (localStorage.getItem("userId") != null && localStorage.getItem("userId") == userId)) &&
                             <Button color='error' variant="outlined" size="small" onClick={() => { deletePost() }}>
                                 Delete post
                                 <DeleteIcon fontSize='small' style={{ marginLeft: 2 }} />

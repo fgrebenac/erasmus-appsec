@@ -13,7 +13,9 @@ export default function Header(props: HeaderProps) {
 
   let navigate = useNavigate();
 
+  let username = localStorage.getItem("username");
   let token = localStorage.getItem("token");
+
   if (token == null) {
     return (
       <React.Fragment>
@@ -56,6 +58,10 @@ export default function Header(props: HeaderProps) {
             }}
           >
             {title}
+          </Typography>
+          <Typography
+            marginRight={2}>
+            Hello {username}
           </Typography>
           <Button variant="outlined" size="small" sx={{ marginRight: 2 }} onClick={() => { navigate("/newpost") }}>
             Create new post

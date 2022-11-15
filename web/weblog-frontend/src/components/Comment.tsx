@@ -42,7 +42,7 @@ export default function CommentView({ comment, deleteClick, updateClick }: Comme
                         </Button>
                     }
                     {
-                        ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin")) ||
+                        ((localStorage.getItem("isAdmin") != null && localStorage.getItem("isAdmin") == "True") ||
                         (localStorage.getItem("userId") != null && localStorage.getItem("userId") == comment.user_id)) &&
                         <Button color='error' variant="outlined" size="small" onClick={() => { deleteClick() }}>
                             Delete

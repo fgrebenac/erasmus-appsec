@@ -597,7 +597,6 @@ def modify_comment_by_id(user_id, post_id, comment_id):
 def delete_comment_by_id(user_id, post_id, comment_id):
     try:
         token = get_token(request)
-        print(token)
         if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'

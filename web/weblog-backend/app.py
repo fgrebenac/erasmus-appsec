@@ -5,6 +5,7 @@ from flask import Flask, request, Response
 from util import *
 import bcrypt
 from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -20,7 +21,7 @@ def login():
         password = json_body['password']
 
         cur = conn.cursor()
-        cur.execute('SELECT id, password FROM app_user '
+        cur.execute('SELECT id, password, is_admin FROM app_user '
                     'WHERE username = %(username)s',
                     {
                         'username': username
@@ -48,6 +49,7 @@ def login():
         return Response('{'
                         '  "id": "' + user[0] +
                         '",\n  "jwt": "' + token +
+                        '",\n  "is_admin": "' + str(user[2]) +
                         '"\n}',
                         status=200,
                         mimetype='application/json')
@@ -72,7 +74,7 @@ def create_user():
             return Response('E-mail is not properly formatted', 400, mimetype='application/json')
         if not check_password(password):
             return Response('Password length should be greater than 6 and lower than 20', 400, mimetype='application'
-                                                                                                  '/json')
+                                                                                                        '/json')
 
         hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -223,7 +225,6 @@ def get_posts():
     return Response(prepare_post_resp(posts),
                     status=200,
                     mimetype='application/json')
-
 
 
 @app.route("/user/<user_id>/post", methods=['GET'])

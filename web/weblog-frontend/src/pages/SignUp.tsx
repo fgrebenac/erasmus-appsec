@@ -32,7 +32,6 @@ export default function SignUp() {
       "email": data.get('email')?.toString()
     }).then(res => {
       if (res.status == 200) {
-        console.log("Success")
         navigate("/login")
       }
     })

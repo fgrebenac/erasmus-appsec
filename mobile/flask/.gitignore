@@ -1,7 +1,6 @@
 /mobile/flask/__pycache__
 /mobile/flask/venv
 /db
-res.py
 # Created by https://www.toptal.com/developers/gitignore/api/flask,python,pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=flask,python,pycharm
 
@@ -22,6 +21,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.idea/
 build/
 develop-eggs/
 dist/

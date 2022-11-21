@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import jwt
 from flask import Flask, request, Response
-from res import *
+from util import *
 import bcrypt
 
 app = Flask(__name__)
@@ -18,7 +18,10 @@ def login():
 
         cur = conn.cursor()
         cur.execute('SELECT id, password FROM app_user '
-                    "WHERE username = '" + username + "'")  # to avoid string encoding error
+                    "WHERE username = %(username)s",
+                    {
+                        'username': username
+                    })  # to avoid string encoding error
 
         user = cur.fetchone()
         cur.close()
@@ -27,10 +30,8 @@ def login():
             'user_id': user[0],
             'exp': datetime.utcnow() + timedelta(hours=24)
         }, SECRET_KEY)
-        token = 'a'
 
         tokens[user[0]] = token
-
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -99,7 +100,7 @@ def delete_user(user_id):
     try:
         token = get_token(request)
 
-        if not is_user_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -107,7 +108,10 @@ def delete_user(user_id):
         conn = get_conn()
         cur = conn.cursor()
         cur.execute('DELETE FROM app_user '
-                    "WHERE id = '" + user_id + "'")
+                    'WHERE id = %(user_id)s',
+                    {
+                        "user_id": get_current_user(token)
+                    })
 
         conn.commit()
         cur.close()
@@ -134,7 +138,7 @@ def create_post(user_id):
         content = json_body['content']
         token = get_token(request)
 
-        if not is_user_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -142,7 +146,7 @@ def create_post(user_id):
         cur = conn.cursor()
         cur.execute('INSERT INTO post (title, content, user_id)'
                     'values (%s, %s, %s)',
-                    (title, content, user_id))
+                    (title, content, get_current_user(token)))
 
         conn.commit()
         cur.close()
@@ -165,15 +169,19 @@ def get_posts(user_id):
     try:
         token = get_token(request)
 
-        if not is_user_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
 
         conn = get_conn()
         cur = conn.cursor()
-        cur.execute(f'SELECT id, title, content FROM post p '
-                    "WHERE user_id = '" + user_id + "'")
+        cur.execute('SELECT p.id, p.title, p.content, u.username, p.user_id FROM post p '
+                    'JOIN app_user u on u.id = p.user_id '
+                    'WHERE user_id = %(user_id)s',
+                    {
+                        'user_id': get_current_user(token)
+                    })
 
         posts = cur.fetchall()
 
@@ -197,7 +205,7 @@ def get_posts(user_id):
 def get_post_by_id(user_id, post_id):
     try:
         token = get_token(request)
-        if not is_user_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -206,7 +214,7 @@ def get_post_by_id(user_id, post_id):
         cur = conn.cursor()
         cur.execute('SELECT id, title, content FROM post p '
                     'WHERE id = %s and user_id = %s',
-                    (post_id, user_id))
+                    (post_id, get_current_user(token)))
 
         posts = cur.fetchmany()
 
@@ -241,7 +249,7 @@ def modify_post_by_id(user_id, post_id):
         content = json_body['content']
         token = get_token(request)
 
-        if not is_user_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -250,7 +258,7 @@ def modify_post_by_id(user_id, post_id):
         cur = conn.cursor()
         cur.execute('UPDATE post SET title = %s, content = %s '
                     'WHERE id = %s and user_id = %s',
-                    (title, content, post_id, user_id))
+                    (title, content, post_id, get_current_user(token)))
         conn.commit()
         cur.close()
         conn.close()
@@ -270,7 +278,7 @@ def modify_post_by_id(user_id, post_id):
 def delete_post_by_id(user_id, post_id):
     try:
         token = get_token(request)
-        if not is_user_signed_in(user_id, token):
+        if is_user_not_signed_in(user_id, token):
             return Response('{'
                             '   Token does not match the user id'
                             '}', 401)
@@ -279,7 +287,7 @@ def delete_post_by_id(user_id, post_id):
         cur = conn.cursor()
         cur.execute('DELETE FROM post '
                     'where id = %s and user_id = %s',
-                    (post_id, user_id))
+                    (post_id, get_current_user(token)))
 
         conn.commit()
         cur.close()

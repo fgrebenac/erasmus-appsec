@@ -110,21 +110,6 @@ def check_email(email):
         return False
 
 
-def lower_upper_num(password):
-    digit = False
-    upper = False
-    lower = False
-    for char in password:
-        if str(char).isdigit():
-            digit = True
-        elif str(char).isupper():
-            upper = True
-        elif str(char).islower():
-            lower = True
-
-    return lower and upper and digit
-
-
 def check_password(password):
     if 6 <= len(password) <= 20:  # and lower_upper_num(password):
         return True

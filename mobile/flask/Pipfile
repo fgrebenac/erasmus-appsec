@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 flask = "*"
 gunicorn = "*"
+bcrypt = "*"
+pyjwt = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

@@ -3,15 +3,13 @@ package com.anteifilip.appsec.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anteifilip.appsec.models.Post
-import com.anteifilip.appsec.models.PostBody
-import com.anteifilip.appsec.models.UserBody
+import com.anteifilip.appsec.models.*
 import com.anteifilip.appsec.network.AppSecRepository
 import kotlinx.coroutines.launch
 
 class AppSecViewModel(private val repository: AppSecRepository) : ViewModel() {
 
-    val loginResponse = MutableLiveData<String>()
+    val loginResponse = MutableLiveData<UserResponse>()
     val loginError = MutableLiveData<Unit>()
 
     val userResponse = MutableLiveData<Unit>()
@@ -29,16 +27,26 @@ class AppSecViewModel(private val repository: AppSecRepository) : ViewModel() {
     val getPostResponse = MutableLiveData<Post>()
     val getPostError = MutableLiveData<Unit>()
 
+    val isTokenValid = MutableLiveData<Boolean>()
+
+    val updatePostResponse = MutableLiveData<Unit>()
+    val updatePostError = MutableLiveData<Unit>()
+
     fun login(userBody: UserBody) = viewModelScope.launch {
         val response = repository.login(userBody)
         if (response.isSuccessful) loginResponse.value = response.body()
         else loginError.value = Unit
     }
 
-    fun user(userBody: UserBody) = viewModelScope.launch {
+    fun user(userBody: UserRegistrationBody) = viewModelScope.launch {
         val response = repository.user(userBody)
         if (response.isSuccessful) userResponse.value = response.body()
         else userError.value = Unit
+    }
+
+    fun checkAuthState(userId: String) = viewModelScope.launch {
+        val response = repository.getPosts(userId)
+        isTokenValid.value = response.isSuccessful
     }
 
     fun post(userId: String, post: PostBody) = viewModelScope.launch {
@@ -59,10 +67,10 @@ class AppSecViewModel(private val repository: AppSecRepository) : ViewModel() {
         else deletePostError.value = Unit
     }
 
-    fun getPost(userId: String, postId: String) = viewModelScope.launch {
-        val response = repository.getPost(userId, postId)
-        if (response.isSuccessful) getPostResponse.value = response.body()
-        else getPostError.value = Unit
+    fun updatePost(userId: String, postId: String, post: PostBody) = viewModelScope.launch {
+        val response = repository.updatePost(userId, postId, post)
+        if (response.isSuccessful) updatePostResponse.value = Unit
+        else updatePostError.value = Unit
     }
 
 }

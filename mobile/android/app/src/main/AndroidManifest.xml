@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.OnboardingActivity"
+            android:name=".ui.SplashActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -28,6 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.OnboardingActivity"
+            android:configChanges="uiMode"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.PostsActivity"
             android:configChanges="uiMode"

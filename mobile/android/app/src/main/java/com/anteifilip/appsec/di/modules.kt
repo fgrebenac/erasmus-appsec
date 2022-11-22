@@ -1,10 +1,13 @@
 package com.anteifilip.appsec.di
 
+import android.content.Context
 import com.anteifilip.appsec.network.AppSecApiService
 import com.anteifilip.appsec.network.AppSecRepository
 import com.anteifilip.appsec.ui.AppSecViewModel
+import com.anteifilip.appsec.utils.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +22,7 @@ val repositoryModule = module {
 
 val networkModule = module {
     factory { provideAppSecApi(get()) }
-    factory { provideOkHttpClient() }
+    factory { provideOkHttpClient(androidContext()) }
     single { provideRetrofit(get()) }
 }
 
@@ -31,8 +34,9 @@ fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         .addConverterFactory(GsonConverterFactory.create()).build()
 }
 
-fun provideOkHttpClient(): OkHttpClient {
+fun provideOkHttpClient(context: Context): OkHttpClient {
     val loggingInterceptor = HttpLoggingInterceptor()
     loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    return OkHttpClient().newBuilder().addInterceptor(loggingInterceptor).build()
+    return OkHttpClient().newBuilder().addInterceptor(loggingInterceptor)
+        .addInterceptor(AuthInterceptor(context)).build()
 }

@@ -9,6 +9,7 @@ gunicorn = "*"
 bcrypt = "*"
 pyjwt = "*"
 psycopg2 = "*"
+flask-cors = "*"
 
 [dev-packages]
 

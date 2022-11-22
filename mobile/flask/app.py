@@ -4,11 +4,15 @@ import jwt
 from flask import Flask, request, Response
 from util import *
 import bcrypt
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route("/login", methods=['POST'])
+@cross_origin()
 def login():
     try:
         conn = get_conn()
@@ -57,6 +61,7 @@ def login():
 
 
 @app.route("/user", methods=['POST'])
+@cross_origin()
 def create_user():
     try:
         json_body = process_json(request)
@@ -96,6 +101,7 @@ def create_user():
 
 
 @app.route("/user/<user_id>", methods=['DELETE'])
+@cross_origin()
 def delete_user(user_id):
     try:
         token = get_token(request)
@@ -130,6 +136,7 @@ def delete_user(user_id):
 
 
 @app.route("/user/<user_id>/post", methods=['POST'])
+@cross_origin()
 def create_post(user_id):
     try:
         json_body = process_json(request)
@@ -165,6 +172,7 @@ def create_post(user_id):
 
 
 @app.route("/user/<user_id>/post", methods=['GET'])
+@cross_origin()
 def get_posts(user_id):
     try:
         token = get_token(request)
@@ -202,6 +210,7 @@ def get_posts(user_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>", methods=['GET'])
+@cross_origin()
 def get_post_by_id(user_id, post_id):
     try:
         token = get_token(request)
@@ -242,6 +251,7 @@ def get_post_by_id(user_id, post_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>", methods=['PUT'])
+@cross_origin()
 def modify_post_by_id(user_id, post_id):
     try:
         json_body = process_json(request)
@@ -275,6 +285,7 @@ def modify_post_by_id(user_id, post_id):
 
 
 @app.route("/user/<user_id>/post/<post_id>", methods=['DELETE'])
+@cross_origin()
 def delete_post_by_id(user_id, post_id):
     try:
         token = get_token(request)

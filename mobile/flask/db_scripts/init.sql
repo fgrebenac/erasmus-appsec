@@ -1,4 +1,5 @@
 create database mob_app;
+\c mob_app
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 

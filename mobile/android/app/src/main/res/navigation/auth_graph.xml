@@ -8,12 +8,20 @@
     <fragment
         android:id="@+id/onboarding"
         android:name="com.anteifilip.appsec.ui.OnboardingFragment"
-        android:label="Registration"
+        android:label="Onboarding"
         tools:layout="@layout/fragment_onboarding">
 
         <action
-            android:id="@+id/open_auth"
-            app:destination="@id/auth"
+            android:id="@+id/open_login"
+            app:destination="@id/login"
+            app:enterAnim="@anim/enter_from_right_anim"
+            app:exitAnim="@anim/exit_to_left_anim"
+            app:popEnterAnim="@anim/enter_from_left_anim"
+            app:popExitAnim="@anim/exit_to_right_anim" />
+
+        <action
+            android:id="@+id/open_registration"
+            app:destination="@id/registration"
             app:enterAnim="@anim/enter_from_right_anim"
             app:exitAnim="@anim/exit_to_left_anim"
             app:popEnterAnim="@anim/enter_from_left_anim"
@@ -22,22 +30,24 @@
     </fragment>
 
     <fragment
-        android:id="@+id/auth"
-        android:name="com.anteifilip.appsec.ui.AuthFragment"
+        android:id="@+id/login"
+        android:name="com.anteifilip.appsec.ui.LoginFragment"
         android:label="Auth"
-        tools:layout="@layout/fragment_auth">
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/registration"
+        android:name="com.anteifilip.appsec.ui.RegistrationFragment"
+        android:label="Registration"
+        tools:layout="@layout/fragment_registration">
 
         <action
-            android:id="@+id/open_auth"
-            app:destination="@id/auth"
+            android:id="@+id/open_login"
+            app:destination="@id/login"
             app:enterAnim="@anim/enter_from_right_anim"
             app:exitAnim="@anim/exit_to_left_anim"
             app:popEnterAnim="@anim/enter_from_left_anim"
             app:popExitAnim="@anim/exit_to_right_anim" />
-
-        <argument
-            android:name="isLogin"
-            app:argType="boolean" />
 
     </fragment>
 

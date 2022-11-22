@@ -3,6 +3,7 @@ package com.anteifilip.appsec.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.anteifilip.appsec.databinding.ActivityNotesBinding
 import com.anteifilip.appsec.utils.PreferenceHelper
 import com.anteifilip.appsec.utils.PreferenceHelper.get
@@ -38,14 +39,21 @@ class PostsActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.getPostsResponse.observe(this) {
-            adapter = PostsAdapter(it) { post ->
+            adapter = PostsAdapter(it, { post ->
+                val dialog = NewPostDialogFragment(post) {
+                    viewModel.getPosts(PreferenceHelper.defaultPrefs(this)["userId"])
+                }
+                dialog.show(supportFragmentManager, "NewPostDialog")
+            }, { post ->
                 viewModel.deletePost(PreferenceHelper.defaultPrefs(this)["userId"], post.id)
-            }
+            })
             binding.notesRecyclerView.adapter = adapter
             binding.swipe.isRefreshing = false
+            binding.noNotesLayout.isVisible = it.isEmpty()
         }
         viewModel.getPostsError.observe(this) {
             Toast.makeText(this, "Failed to get posts.", Toast.LENGTH_SHORT).show()
+            binding.noNotesLayout.isVisible = true
         }
         viewModel.deletePostResponse.observe(this) {
             viewModel.getPosts(PreferenceHelper.defaultPrefs(this)["userId"])

@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.anteifilip.appsec.R
 import com.anteifilip.appsec.databinding.DialogNewPostBinding
+import com.anteifilip.appsec.models.Post
 import com.anteifilip.appsec.models.PostBody
 import com.anteifilip.appsec.utils.PreferenceHelper
 import com.anteifilip.appsec.utils.PreferenceHelper.get
@@ -18,7 +19,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewPostDialogFragment(private val onPostSuccess: () -> Unit) : BottomSheetDialogFragment() {
+class NewPostDialogFragment(
+    private val postToEdit: Post? = null,
+    private val onPostSuccess: () -> Unit
+) : BottomSheetDialogFragment() {
 
     private val binding by viewBinding(DialogNewPostBinding::bind)
     private val viewModel: AppSecViewModel by viewModel()
@@ -46,10 +50,30 @@ class NewPostDialogFragment(private val onPostSuccess: () -> Unit) : BottomSheet
         setViews()
     }
 
-    private fun setViews() = binding.apply {
+    private fun setViews() = postToEdit?.let {
+        setEditViews(it)
+    } ?: run {
+        setNewViews()
+    }
+
+    private fun setNewViews() = binding.apply {
         addPostButton.onClickDebounced {
             viewModel.post(
                 PreferenceHelper.defaultPrefs(requireContext())["userId"],
+                PostBody(titleEditText.text.toString(), contentEditText.text.toString())
+            )
+        }
+    }
+
+    private fun setEditViews(post: Post) = binding.apply {
+        dialogTitle.text = getString(R.string.edit_post)
+        titleEditText.setText(post.title)
+        contentEditText.setText(post.content)
+        addPostButton.text = getString(R.string.finish_editing)
+        addPostButton.onClickDebounced {
+            viewModel.updatePost(
+                PreferenceHelper.defaultPrefs(requireContext())["userId"],
+                post.id,
                 PostBody(titleEditText.text.toString(), contentEditText.text.toString())
             )
         }
@@ -61,7 +85,14 @@ class NewPostDialogFragment(private val onPostSuccess: () -> Unit) : BottomSheet
             dismiss()
         }
         viewModel.postError.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Adding post failed.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Adding note failed.", Toast.LENGTH_SHORT).show()
+        }
+        viewModel.updatePostResponse.observe(viewLifecycleOwner) {
+            onPostSuccess.invoke()
+            dismiss()
+        }
+        viewModel.updatePostError.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "Editing note failed.", Toast.LENGTH_SHORT).show()
         }
     }
 }

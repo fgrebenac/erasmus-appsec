@@ -9,6 +9,7 @@ import com.anteifilip.appsec.utils.onClickDebounced
 
 class PostsAdapter(
     private val posts: List<Post>,
+    private val onPostClick: (Post) -> Unit,
     private val onDeleteClick: (Post) -> Unit
 ) : RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
@@ -29,6 +30,7 @@ class PostsAdapter(
             binding.apply {
                 postTitle.text = item.title
                 postContent.text = item.content
+                root.onClickDebounced { onPostClick.invoke(item) }
                 deleteButton.onClickDebounced { onDeleteClick.invoke(item) }
             }
         }

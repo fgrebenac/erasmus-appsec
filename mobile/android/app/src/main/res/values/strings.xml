@@ -4,8 +4,13 @@
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="new_post">New post</string>
+    <string name="new_post">New note</string>
     <string name="title">Title</string>
     <string name="content">Content</string>
-    <string name="add_new_post">Add new post</string>
+    <string name="add_new_post">Add new note</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="you_have_no_notes_yet">You have no notes yet</string>
+    <string name="edit_post">Edit note</string>
+    <string name="finish_editing">Finish editing</string>
 </resources>

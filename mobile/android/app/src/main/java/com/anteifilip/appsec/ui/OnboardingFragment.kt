@@ -16,10 +16,10 @@ class OnboardingFragment : Fragment(R.layout.fragment_onboarding) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginButton.onClickDebounced {
-            findNavController().navigate(OnboardingFragmentDirections.openAuth(true))
+            findNavController().navigate(OnboardingFragmentDirections.openLogin())
         }
         binding.registerButton.onClickDebounced {
-            findNavController().navigate(OnboardingFragmentDirections.openAuth(false))
+            findNavController().navigate(OnboardingFragmentDirections.openRegistration())
         }
     }
 

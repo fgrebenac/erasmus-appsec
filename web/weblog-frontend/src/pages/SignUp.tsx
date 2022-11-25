@@ -21,7 +21,7 @@ export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios.post('http://127.0.0.1:5000/user', {
+    axios.post('http://web-flask-appsec.herokuapp.com/user', {
       "username": data.get('username')?.toString(),
       "password": data.get('password')?.toString(),
       "email": data.get('email')?.toString()

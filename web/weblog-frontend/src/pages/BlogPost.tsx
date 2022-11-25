@@ -27,7 +27,7 @@ export default function BlogPost() {
     const [addComment, setAddComment] = useState<boolean>(false);
 
     const fetchComments = async () => {
-        const response = await axios.get(`http://127.0.0.1:5000/user/${userId}/post/${postId}/comment`);
+        const response = await axios.get(`http://web-flask-appsec.herokuapp.com/user/${userId}/post/${postId}/comment`);
         let fetchedComments = response.data as PostComment[];
         setComments(fetchedComments)
     };
@@ -36,7 +36,7 @@ export default function BlogPost() {
         let token = localStorage.getItem("token");
         let myUserId = localStorage.getItem("userId");
         if (token != null && myUserId != null) {
-            axios.delete(`http://127.0.0.1:5000/user/${myUserId}/post/${postId}/comment/${id}`, {
+            axios.delete(`http://web-flask-appsec.herokuapp.com/user/${myUserId}/post/${postId}/comment/${id}`, {
                 headers: {
                     "Authorization": `Basic ${token}`
                 }
@@ -54,7 +54,7 @@ export default function BlogPost() {
     const updateComment = async (id: string, content: string) => {
         let token = localStorage.getItem("token");
         if (token != null) {
-            axios.put(`http://127.0.0.1:5000/user/${userId}/post/${postId}/comment/${id}`,
+            axios.put(`http://web-flask-appsec.herokuapp.com/user/${userId}/post/${postId}/comment/${id}`,
                 {
                     "content": content
                 },
@@ -76,7 +76,7 @@ export default function BlogPost() {
     const deletePost = async () => {
         let token = localStorage.getItem("token");
         if (token != null) {
-            axios.delete(`http://127.0.0.1:5000/user/${userId}/post/${postId}`, {
+            axios.delete(`http://web-flask-appsec.herokuapp.com/user/${userId}/post/${postId}`, {
                 headers: {
                     "Authorization": `Basic ${token}`
                 }
@@ -93,7 +93,7 @@ export default function BlogPost() {
 
     useEffect(() => {
         const fetchPost = async () => {
-            const response = await axios.get(`http://127.0.0.1:5000/user/${userId}/post/${postId}`);
+            const response = await axios.get(`http://web-flask-appsec.herokuapp.com/user/${userId}/post/${postId}`);
             let fetchedPost = response.data as Post;
             setPost(fetchedPost);
         };

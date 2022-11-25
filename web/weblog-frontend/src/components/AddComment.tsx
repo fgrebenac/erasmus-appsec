@@ -25,7 +25,7 @@ export default function AddCommentView({ postId, cancelClick, doneClick }: AddCo
                         let userId = localStorage.getItem("userId");
                         let token = localStorage.getItem("token");
                         if (userId != null && token != null) {
-                            axios.post(`http://127.0.0.1:5000/user/${userId}/post/${postId}/comment`, {
+                            axios.post(`http://web-flask-appsec.herokuapp.com/user/${userId}/post/${postId}/comment`, {
                                 "content": content,
                             }, {
                                 headers: {

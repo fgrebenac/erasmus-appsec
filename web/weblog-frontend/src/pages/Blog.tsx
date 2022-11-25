@@ -18,7 +18,7 @@ export default function Blog() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await axios.get('http://127.0.0.1:5000/post');
+      const response = await axios.get('http://web-flask-appsec.herokuapp.com/post');
       let fetchedPosts = response.data as Post[];
       setPosts(fetchedPosts);
     };
